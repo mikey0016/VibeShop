@@ -5,8 +5,8 @@
 // Global Telegram WebApp instance
 var tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
 
-// Backend API base URL (same origin when served by FastAPI)
-var API_BASE = window.location.origin;
+// Backend API base URL
+var API_BASE = (typeof window !== 'undefined' && window.API_BASE) ? window.API_BASE : window.location.origin;
 
 // User data (populated from Telegram or fallback)
 var userData = {

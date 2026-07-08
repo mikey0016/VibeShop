@@ -1,5 +1,5 @@
-# Render.com — to'liq backend (FastAPI + Telegram bot + SQLite)
-# https://render.com da "New > Blueprint" orqali deploy qiling
+# Render.com — VibeShop backend (FastAPI + Telegram bot)
+# Dashboard: https://dashboard.render.com → New → Blueprint
 
 services:
   - type: web
@@ -14,11 +14,9 @@ services:
         value: "3.12"
       - key: API_HOST
         value: "0.0.0.0"
-      - key: API_PORT
-        value: "10000"
-      - key: BOT_TOKEN
-        sync: false
       - key: WEBAPP_URL
+        value: "https://vibe-shop.netlify.app"
+      - key: BOT_TOKEN
         sync: false
       - key: ADMIN_IDS
         sync: false

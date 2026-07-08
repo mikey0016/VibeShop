@@ -10,7 +10,7 @@ WEBAPP_DIR = BASE_DIR / "webapp"
 DATABASE_PATH = BASE_DIR / "data" / "vibeshop.db"
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
-WEBAPP_URL = os.getenv("WEBAPP_URL", "http://localhost:8080")
+WEBAPP_URL = os.getenv("WEBAPP_URL", "https://vibe-shop.netlify.app")
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
 API_PORT = int(os.getenv("PORT", os.getenv("API_PORT", "8080")))
 SUPPORT_USERNAME = os.getenv("SUPPORT_USERNAME", "support")

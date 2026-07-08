@@ -1,15 +1,11 @@
-# VibeShop — Frontend (Telegram Mini App UI)
-# Backend API alohida Render/Railway da ishlaydi, /api proxy orqali ulanadi.
+# VibeShop — https://vibe-shop.netlify.app
 
 [build]
   publish = "webapp"
+  command = "node scripts/generate-config.js"
 
-# SPA — barcha sahifalar index emas, lekin .html fayllar to'g'ridan-to'g'ri ishlaydi
-[[redirects]]
-  from = "/api/*"
-  to = "https://PLACEHOLDER-BACKEND.onrender.com/api/:splat"
-  status = 200
-  force = true
+[build.environment]
+  API_URL = "https://vibeshop-api.onrender.com"
 
 [[headers]]
   for = "/*"
