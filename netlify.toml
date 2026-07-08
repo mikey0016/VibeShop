@@ -1,11 +1,11 @@
-# VibeShop — https://vibe-shop.netlify.app
+# VibeShop — https://vibe-shop-uz.netlify.app
 
 [build]
   publish = "webapp"
   command = "node scripts/generate-config.js"
 
 [build.environment]
-  API_URL = "https://vibeshop-api.onrender.com"
+  API_URL = "https://metres-constitutes-antiques-breakdown.trycloudflare.com"
 
 [[headers]]
   for = "/*"

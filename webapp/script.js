@@ -128,8 +128,18 @@ function apiRequest(path, options) {
   }
   return fetch(API_BASE + path, fetchOptions).then(function (res) {
     if (!res.ok) {
-      return res.json().catch(function () { return {}; }).then(function (err) {
-        throw new Error(err.detail || 'API error');
+      return res.text().then(function (text) {
+        var err = {};
+        try { err = JSON.parse(text); } catch (e) { /* not json */ }
+        var msg = err.detail || err.message;
+        if (!msg && text && text.length < 150) msg = text;
+        if (!msg) {
+          if (res.status === 405) msg = 'Server xatosi (405). Keyinroq urinib ko\'ring.';
+          else if (res.status === 401) msg = 'Telegram orqali qayta oching';
+          else if (res.status === 502 || res.status === 503) msg = 'Server vaqtincha ishlamayapti';
+          else msg = res.statusText || 'API xatosi';
+        }
+        throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
       });
     }
     return res.json();
@@ -243,7 +253,10 @@ function initTelegramApp() {
       userData.photoUrl = user.photo_url || '';
     }
 
-    tg.enableClosingConfirmation();
+    // Yopishda tasdiqlash so'ramaslik — ma'lumotlar saqlanadi
+    if (tg.disableClosingConfirmation) {
+      tg.disableClosingConfirmation();
+    }
   }
 
   loadSettings();

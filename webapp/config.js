@@ -1,2 +1,2 @@
 // Auto-generated at build time
-window.API_BASE = 'https://vibeshop-api.onrender.com';
+window.API_BASE = window.location.origin;

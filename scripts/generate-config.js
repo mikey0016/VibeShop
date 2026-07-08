@@ -1,11 +1,24 @@
 /**
- * Netlify build: API URL ni environment dan config.js ga yozadi
+ * Netlify build: config.js + _redirects (API proxy)
  */
 const fs = require('fs');
 const path = require('path');
 
-const apiUrl = process.env.API_URL || 'https://vibeshop-api.onrender.com';
-const content = `// Auto-generated at build time\nwindow.API_BASE = '${apiUrl}';\n`;
+const apiUrl = (process.env.API_URL || 'https://metres-constitutes-antiques-breakdown.trycloudflare.com').replace(/\/$/, '');
+const webappDir = path.join(__dirname, '..', 'webapp');
 
-fs.writeFileSync(path.join(__dirname, '..', 'webapp', 'config.js'), content);
-console.log('config.js generated with API_BASE =', apiUrl);
+const configJs = [
+  '// Auto-generated at build time',
+  'window.API_BASE = window.location.origin;',
+  ''
+].join('\n');
+
+const redirects = [
+  '/api/*  ' + apiUrl + '/api/:splat  200!',
+  '/uploads/*  ' + apiUrl + '/uploads/:splat  200!',
+  ''
+].join('\n');
+
+fs.writeFileSync(path.join(webappDir, 'config.js'), configJs);
+fs.writeFileSync(path.join(webappDir, '_redirects'), redirects);
+console.log('Build OK — API proxy ->', apiUrl);

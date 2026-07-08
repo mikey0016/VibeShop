@@ -1,0 +1,2 @@
+/api/*  https://metres-constitutes-antiques-breakdown.trycloudflare.com/api/:splat  200!
+/uploads/*  https://metres-constitutes-antiques-breakdown.trycloudflare.com/uploads/:splat  200!
