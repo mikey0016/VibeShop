@@ -125,7 +125,8 @@ var homePromoList = [
 var gameConfigs = {
   freefire: {
     title: 'FREE FIRE',
-    subtitle: '💎 Almazlar',
+    subtitle: '💎 Almazlar · SNG',
+    region: 'RU',
     img: 'images/games/freefire.png',
     storageKey: 'freefire',
     tabs: [
@@ -1202,15 +1203,6 @@ function getPlayerOrderMeta() {
   };
 }
 
-function setGameProductsVisible(show) {
-  var section = document.getElementById('gameProductsSection');
-  if (section) section.classList.toggle('hidden', !show);
-  if (!show) {
-    selectedGameProductId = null;
-    updateGameBuyButton();
-  }
-}
-
 function showPlayerIdError(message) {
   var errEl = document.getElementById('playerIdError');
   if (errEl) {
@@ -1235,13 +1227,12 @@ function showVerifiedPlayerCard(nickname, playerId) {
   if (nameEl) nameEl.textContent = nickname;
   if (idEl) idEl.textContent = playerId;
   hidePlayerIdError();
-  setGameProductsVisible(true);
+  updateGameBuyButton();
 }
 
 function resetPlayerVerification() {
   verifiedPlayerId = null;
   verifiedPlayerName = null;
-  selectedGameProductId = null;
 
   var inputBlock = document.getElementById('playerIdInputBlock');
   var verifiedEl = document.getElementById('playerIdVerified');
@@ -1251,11 +1242,7 @@ function resetPlayerVerification() {
   if (verifiedEl) verifiedEl.classList.add('hidden');
   if (input) input.focus();
   hidePlayerIdError();
-  setGameProductsVisible(false);
   updateGameBuyButton();
-  document.querySelectorAll('.game-product-card').forEach(function (card) {
-    card.classList.remove('selected');
-  });
 }
 
 function getSavedPlayerIds(gameKey) {
@@ -1309,7 +1296,6 @@ function verifyPlayerId() {
     showPlayerIdError('To\'g\'ri o\'yinchi ID kiriting');
     verifiedPlayerId = null;
     verifiedPlayerName = null;
-    setGameProductsVisible(false);
     updateGameBuyButton();
     return;
   }
@@ -1323,7 +1309,11 @@ function verifyPlayerId() {
 
   apiRequest('/api/games/verify-player', {
     method: 'POST',
-    body: { game_id: currentGameId, player_id: id }
+    body: {
+      game_id: currentGameId,
+      player_id: id,
+      region: (gameConfigs[currentGameId] && gameConfigs[currentGameId].region) || 'RU'
+    }
   }).then(function (data) {
     verifiedPlayerId = data.player_id;
     verifiedPlayerName = data.nickname;
@@ -1336,8 +1326,8 @@ function verifyPlayerId() {
   }).catch(function (err) {
     verifiedPlayerId = null;
     verifiedPlayerName = null;
-    setGameProductsVisible(false);
     showPlayerIdError(err.message || 'O\'yinchi topilmadi');
+    updateGameBuyButton();
     if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
   }).finally(function () {
     isVerifyingPlayer = false;
@@ -1387,10 +1377,6 @@ function renderGameProducts() {
 }
 
 function selectGameProduct(productId) {
-  if (!verifiedPlayerId) {
-    showToast('Avval o\'yinchi ID ni tekshiring', 'error');
-    return;
-  }
   selectedGameProductId = productId;
   document.querySelectorAll('.game-product-card').forEach(function (card) {
     card.classList.toggle('selected', parseInt(card.dataset.id) === productId);
@@ -1446,7 +1432,6 @@ function initGamePage() {
   }
 
   renderSavedIds(config.storageKey);
-  setGameProductsVisible(false);
 
   var tabsEl = document.getElementById('gameProductTabs');
   if (tabsEl && config.tabs.length) {

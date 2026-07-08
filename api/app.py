@@ -56,6 +56,7 @@ class ProductBuyBalance(BaseModel):
 class PlayerVerifyRequest(BaseModel):
     game_id: str = Field(..., min_length=2, max_length=32)
     player_id: str = Field(..., min_length=5, max_length=15, pattern=r"^\d+$")
+    region: str | None = None
 
 
 @app.get("/api/health")
@@ -114,7 +115,7 @@ async def get_finance(user: dict = Depends(require_telegram_user)):
 @app.post("/api/games/verify-player")
 async def verify_game_player(payload: PlayerVerifyRequest):
     try:
-        result = await verify_player(payload.game_id, payload.player_id)
+        result = await verify_player(payload.game_id, payload.player_id, payload.region)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     return {

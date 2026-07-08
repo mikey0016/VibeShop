@@ -97,7 +97,7 @@ async def _verify_via_custom_url(game_id: str, player_id: str) -> dict | None:
     return None
 
 
-async def _verify_freefire_hlgaming(player_id: str) -> dict | None:
+async def _verify_freefire_hlgaming(player_id: str, region: str) -> dict | None:
     if not HLGAMING_API_KEY or not HLGAMING_USERUID:
         return None
 
@@ -106,7 +106,7 @@ async def _verify_freefire_hlgaming(player_id: str) -> dict | None:
         "useruid": HLGAMING_USERUID,
         "api": HLGAMING_API_KEY,
         "uid": player_id,
-        "region": FREEFIRE_REGION,
+        "region": region,
     }
     url = "https://proapis.hlgamingofficial.com/main/games/freefire/validation/api"
     try:
@@ -134,11 +134,11 @@ async def _verify_freefire_hlgaming(player_id: str) -> dict | None:
     return None
 
 
-async def _verify_freefire_ffdata(player_id: str) -> dict | None:
+async def _verify_freefire_ffdata(player_id: str, region: str) -> dict | None:
     if not FFDATA_API_KEY:
         return None
 
-    url = f"{FFDATA_API_BASE}/api/v1/player/basic?uid={player_id}"
+    url = f"{FFDATA_API_BASE}/api/v1/player/basic?uid={player_id}&region={region}"
     headers = {
         "Authorization": f"Bearer {FFDATA_API_KEY}",
         "Content-Type": "application/json",
@@ -170,9 +170,10 @@ async def _verify_freefire_ffdata(player_id: str) -> dict | None:
     return None
 
 
-async def verify_player(game_id: str, player_id: str) -> dict:
+async def verify_player(game_id: str, player_id: str, region: str | None = None) -> dict:
     game_id = game_id.lower().strip()
     player_id = player_id.strip()
+    ff_region = (region or FREEFIRE_REGION or "RU").upper()
 
     if game_id not in SUPPORTED_GAMES:
         raise ValueError("Bu o'yin uchun tekshiruv mavjud emas")
@@ -189,10 +190,10 @@ async def verify_player(game_id: str, player_id: str) -> dict:
         return custom
 
     if game_id == "freefire":
-        ff = await _verify_freefire_ffdata(player_id)
+        ff = await _verify_freefire_ffdata(player_id, ff_region)
         if ff:
             return ff
-        hlg = await _verify_freefire_hlgaming(player_id)
+        hlg = await _verify_freefire_hlgaming(player_id, ff_region)
         if hlg:
             return hlg
 

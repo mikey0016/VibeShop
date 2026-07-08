@@ -48,7 +48,7 @@ HLGAMING_API_KEY = os.getenv("HLGAMING_API_KEY", "")
 HLGAMING_USERUID = os.getenv("HLGAMING_USERUID", "")
 FFDATA_API_KEY = os.getenv("FFDATA_API_KEY", "")
 FFDATA_API_BASE = os.getenv("FFDATA_API_BASE", "https://ffdata-api.onrender.com").rstrip("/")
-FREEFIRE_REGION = os.getenv("FREEFIRE_REGION", "SG")
+FREEFIRE_REGION = os.getenv("FREEFIRE_REGION", "RU")
 
 # Dev/test: {"freefire":{"637195216":"X Eclipse"}}
 try:
