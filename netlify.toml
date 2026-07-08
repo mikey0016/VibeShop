@@ -5,7 +5,7 @@
   command = "node scripts/generate-config.js"
 
 [build.environment]
-  API_URL = "https://vibeshop.onrender.com"
+  API_URL = "https://vibeshop-rv9n.onrender.com"
 
 [[headers]]
   for = "/*"
