@@ -1,0 +1,27 @@
+# fly.io — 24/7 backend
+app = "vibeshop-api"
+primary_region = "waw"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  WEBAPP_URL = "https://vibe-shop-uz.netlify.app"
+  SERVE_WEBAPP = "false"
+  API_HOST = "0.0.0.0"
+  SUPPORT_USERNAME = "VibeShop_support"
+  PAYMENT_TIMEOUT_MINUTES = "5"
+  CARD_BANK = "UzCard"
+  CARD_BANK_VISA = "Visa"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"

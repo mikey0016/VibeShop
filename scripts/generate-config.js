@@ -1,12 +1,14 @@
 /**
- * Netlify build: config.js + _redirects (API proxy)
+ * Production: same-origin via Netlify proxy
+ * Local dev: python main.py with SERVE_WEBAPP=true uses localhost
  */
 const fs = require('fs');
 const path = require('path');
 
-const apiUrl = (process.env.API_URL || 'https://metres-constitutes-antiques-breakdown.trycloudflare.com').replace(/\/$/, '');
+const apiUrl = (process.env.API_URL || 'https://vibeshop-api.onrender.com').replace(/\/$/, '');
 const webappDir = path.join(__dirname, '..', 'webapp');
 
+// Same-origin — Netlify _redirects POST ni ham proxy qiladi
 const configJs = [
   '// Auto-generated at build time',
   'window.API_BASE = window.location.origin;',

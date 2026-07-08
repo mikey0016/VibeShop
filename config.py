@@ -32,3 +32,6 @@ CARD_BANK = os.getenv("CARD_BANK", "UzCard")
 CARD_NUMBER_VISA = os.getenv("CARD_NUMBER_VISA", "")
 CARD_HOLDER_VISA = os.getenv("CARD_HOLDER_VISA", "")
 CARD_BANK_VISA = os.getenv("CARD_BANK_VISA", "Visa")
+
+# Production: frontend Netlify'da — static serve kerak emas (POST /api 405 oldini oladi)
+SERVE_WEBAPP = os.getenv("SERVE_WEBAPP", "false").lower() in ("1", "true", "yes")

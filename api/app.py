@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from api.auth import is_admin_user, require_telegram_user
 from api.admin_routes import router as admin_router
-from config import UPLOADS_DIR, WEBAPP_DIR
+from config import SERVE_WEBAPP, UPLOADS_DIR, WEBAPP_DIR
 from database.db import (
     confirm_card_to_card,
     create_order_from_balance,
@@ -242,6 +242,6 @@ async def buy_with_balance(
 # Static uploads for admin review
 app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR)), name="uploads")
 
-# Static Mini App files (must be mounted last)
-if WEBAPP_DIR.exists():
+# Static Mini App — faqat lokal dev (Netlify frontend alohida)
+if SERVE_WEBAPP and WEBAPP_DIR.exists():
     app.mount("/", StaticFiles(directory=str(WEBAPP_DIR), html=True), name="webapp")

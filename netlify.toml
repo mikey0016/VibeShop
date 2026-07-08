@@ -5,7 +5,7 @@
   command = "node scripts/generate-config.js"
 
 [build.environment]
-  API_URL = "https://metres-constitutes-antiques-breakdown.trycloudflare.com"
+  API_URL = "https://burn-sufficiently-campus-three.trycloudflare.com"
 
 [[headers]]
   for = "/*"
