@@ -24,3 +24,11 @@ ADMIN_IDS: list[int] = [
 
 UPLOADS_DIR = BASE_DIR / "data" / "uploads"
 PAYMENT_TIMEOUT_MINUTES = int(os.getenv("PAYMENT_TIMEOUT_MINUTES", "5"))
+
+# Payment cards (seeded to DB on startup)
+CARD_NUMBER = os.getenv("CARD_NUMBER", "")
+CARD_HOLDER = os.getenv("CARD_HOLDER", "")
+CARD_BANK = os.getenv("CARD_BANK", "UzCard")
+CARD_NUMBER_VISA = os.getenv("CARD_NUMBER_VISA", "")
+CARD_HOLDER_VISA = os.getenv("CARD_HOLDER_VISA", "")
+CARD_BANK_VISA = os.getenv("CARD_BANK_VISA", "Visa")

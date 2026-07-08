@@ -24,3 +24,15 @@ services:
         value: "VibeShop_support"
       - key: PAYMENT_TIMEOUT_MINUTES
         value: "5"
+      - key: CARD_NUMBER
+        sync: false
+      - key: CARD_HOLDER
+        sync: false
+      - key: CARD_BANK
+        value: "UzCard"
+      - key: CARD_NUMBER_VISA
+        sync: false
+      - key: CARD_HOLDER_VISA
+        sync: false
+      - key: CARD_BANK_VISA
+        value: "Visa"

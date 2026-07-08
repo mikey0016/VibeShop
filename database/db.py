@@ -1,7 +1,7 @@
 import aiosqlite
 from datetime import datetime, timedelta, timezone
 
-from config import DATABASE_PATH, PAYMENT_TIMEOUT_MINUTES
+from config import DATABASE_PATH, PAYMENT_TIMEOUT_MINUTES, CARD_NUMBER, CARD_HOLDER, CARD_BANK
 from database.seed import PRODUCTS
 
 
@@ -82,6 +82,9 @@ async def init_db() -> None:
             """
         )
         await db.commit()
+
+    if CARD_NUMBER and CARD_HOLDER:
+        await update_payment_settings(CARD_NUMBER, CARD_HOLDER, CARD_BANK)
 
     await seed_products()
 
