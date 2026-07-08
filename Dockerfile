@@ -12,7 +12,7 @@ COPY . .
 RUN mkdir -p data/uploads
 
 ENV API_HOST=0.0.0.0
-ENV WEBAPP_URL=https://vibe-shop.netlify.app
+ENV WEBAPP_URL=https://vibe-shop-uz.netlify.app
 
 EXPOSE 8080
 

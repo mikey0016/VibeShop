@@ -10,7 +10,7 @@ ENV_FILE = ROOT / ".env"
 
 REQUIRED = ["BOT_TOKEN", "ADMIN_IDS"]
 OPTIONAL = {
-    "WEBAPP_URL": "https://vibe-shop.netlify.app",
+    "WEBAPP_URL": "https://vibe-shop-uz.netlify.app",
     "SUPPORT_USERNAME": "VibeShop_support",
     "PAYMENT_TIMEOUT_MINUTES": "5",
 }

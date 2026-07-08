@@ -1,2 +1,2 @@
-// Production API URL — Netlify build vaqtida generate-config.js yangilaydi
+// Auto-generated at build time
 window.API_BASE = 'https://vibeshop-api.onrender.com';

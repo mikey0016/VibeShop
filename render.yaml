@@ -15,7 +15,7 @@ services:
       - key: API_HOST
         value: "0.0.0.0"
       - key: WEBAPP_URL
-        value: "https://vibe-shop.netlify.app"
+        value: "https://vibe-shop-uz.netlify.app"
       - key: BOT_TOKEN
         sync: false
       - key: ADMIN_IDS
