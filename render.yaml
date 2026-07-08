@@ -38,9 +38,15 @@ services:
         sync: false
       - key: CARD_BANK_VISA
         value: "Visa"
+      - key: HLGAMING_USERUID
+        sync: false
+      - key: HLGAMING_API_KEY
+        sync: false
       - key: FFDATA_API_KEY
         sync: false
       - key: FFDATA_API_BASE
         value: "https://ffdata-api.onrender.com"
       - key: FREEFIRE_REGION
         value: "RU"
+      - key: FREEFIRE_REGION_FALLBACKS
+        value: "CIS,RU,SG,ME,PK"

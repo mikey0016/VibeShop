@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 from api.auth import is_admin_user, require_telegram_user
 from api.admin_routes import router as admin_router
-from api.game_verify import verify_player
+from api.game_verify import VerifyError, verify_player
 from config import SERVE_WEBAPP, UPLOADS_DIR, WEBAPP_DIR
 from database.db import (
     confirm_card_to_card,
@@ -116,8 +116,14 @@ async def get_finance(user: dict = Depends(require_telegram_user)):
 async def verify_game_player(payload: PlayerVerifyRequest):
     try:
         result = await verify_player(payload.game_id, payload.player_id, payload.region)
-    except ValueError as exc:
-        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except VerifyError as exc:
+        status = {
+            "not_configured": 503,
+            "provider_auth": 502,
+            "invalid_id": 400,
+            "unsupported": 400,
+        }.get(exc.code, 404)
+        raise HTTPException(status_code=status, detail=str(exc)) from exc
     return {
         "found": True,
         "game_id": payload.game_id,

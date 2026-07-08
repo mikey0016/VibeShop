@@ -49,6 +49,13 @@ HLGAMING_USERUID = os.getenv("HLGAMING_USERUID", "")
 FFDATA_API_KEY = os.getenv("FFDATA_API_KEY", "")
 FFDATA_API_BASE = os.getenv("FFDATA_API_BASE", "https://ffdata-api.onrender.com").rstrip("/")
 FREEFIRE_REGION = os.getenv("FREEFIRE_REGION", "RU")
+FREEFIRE_REGION_FALLBACKS = os.getenv("FREEFIRE_REGION_FALLBACKS", "CIS,RU,SG,ME,PK")
+FREEFIRE_INFO_API_BASE = os.getenv(
+    "FREEFIRE_INFO_API_BASE", "https://freefireinfo-zy9l.onrender.com"
+).rstrip("/")
+FREEFIRE_UID_INFO_API = os.getenv(
+    "FREEFIRE_UID_INFO_API", "https://ff-uid-info-api.vercel.app"
+).rstrip("/")
 
 # Dev/test: {"freefire":{"637195216":"X Eclipse"}}
 try:
