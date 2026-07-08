@@ -1,3 +1,4 @@
+import json
 import os
 from pathlib import Path
 
@@ -32,6 +33,30 @@ CARD_BANK = os.getenv("CARD_BANK", "UzCard")
 CARD_NUMBER_VISA = os.getenv("CARD_NUMBER_VISA", "")
 CARD_HOLDER_VISA = os.getenv("CARD_HOLDER_VISA", "")
 CARD_BANK_VISA = os.getenv("CARD_BANK_VISA", "Visa")
+
+# O'yinchi ID tekshiruv (provider URL: {player_id} yoki {uid})
+GAME_VERIFY_URLS: dict[str, str] = {
+    "freefire": os.getenv("FREEFIRE_VERIFY_URL", ""),
+    "pubg": os.getenv("PUBG_VERIFY_URL", ""),
+    "bloodstrike": os.getenv("BLOODSTRIKE_VERIFY_URL", ""),
+    "magicchess": os.getenv("MAGICCHESS_VERIFY_URL", ""),
+    "deltaforce": os.getenv("DELTA_FORCE_VERIFY_URL", ""),
+    "shootloot": os.getenv("SHOOTLOOT_VERIFY_URL", ""),
+    "standoff2": os.getenv("STANDOFF2_VERIFY_URL", ""),
+}
+HLGAMING_API_KEY = os.getenv("HLGAMING_API_KEY", "")
+HLGAMING_USERUID = os.getenv("HLGAMING_USERUID", "")
+FFDATA_API_KEY = os.getenv("FFDATA_API_KEY", "")
+FFDATA_API_BASE = os.getenv("FFDATA_API_BASE", "https://ffdata-api.onrender.com").rstrip("/")
+FREEFIRE_REGION = os.getenv("FREEFIRE_REGION", "SG")
+
+# Dev/test: {"freefire":{"637195216":"X Eclipse"}}
+try:
+    GAME_VERIFY_OVERRIDES: dict[str, dict[str, str]] = json.loads(
+        os.getenv("GAME_VERIFY_OVERRIDES", "{}")
+    )
+except json.JSONDecodeError:
+    GAME_VERIFY_OVERRIDES = {}
 
 # Production: frontend Netlify'da — static serve kerak emas (POST /api 405 oldini oladi)
 SERVE_WEBAPP = os.getenv("SERVE_WEBAPP", "false").lower() in ("1", "true", "yes")

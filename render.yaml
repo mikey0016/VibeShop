@@ -38,3 +38,7 @@ services:
         sync: false
       - key: CARD_BANK_VISA
         value: "Visa"
+      - key: FFDATA_API_KEY
+        sync: false
+      - key: FFDATA_API_BASE
+        value: "https://ffdata-api.onrender.com"

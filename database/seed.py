@@ -21,4 +21,7 @@ PRODUCTS = [
     {"id": 20, "name": "110 Diamonds", "emoji": "💎", "category": "freefire", "price": 10400},
     {"id": 21, "name": "572 Diamonds", "emoji": "💎", "category": "freefire", "price": 52700},
     {"id": 22, "name": "2398 Diamonds", "emoji": "💎", "category": "freefire", "price": 202000},
+    {"id": 23, "name": "341 Diamonds", "emoji": "💎", "category": "freefire", "price": 32000},
+    {"id": 24, "name": "1166 Diamonds", "emoji": "💎", "category": "freefire", "price": 105500},
+    {"id": 25, "name": "6160 Diamonds", "emoji": "💎", "category": "freefire", "price": 511000},
 ]

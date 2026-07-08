@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>GameVibeShop</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body class="splash-body">
+
+  <div class="splash">
+    <div class="splash__stars"></div>
+    <a class="splash__shop-pill" href="index.html">SHOP</a>
+
+    <div class="splash__center">
+      <div class="splash__logo-wrap">
+        <!-- O'z logotipingiz: images/splash/logo.png -->
+        <img class="splash__logo-img" src="images/splash/logo.png" alt="GameVibeShop" onerror="this.onerror=null;this.src='images/splash/logo.svg';">
+        <div class="splash__gamepad hidden" aria-hidden="true"></div>
+      </div>
+      <h1 class="splash__title">GameVibeShop</h1>
+      <p class="splash__subtitle">GAMES &amp; TOP-UP STORE</p>
+    </div>
+
+    <a class="splash__enter" href="index.html">Do'konni ochish</a>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    if (window.Telegram && window.Telegram.WebApp) {
+      var tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+    }
+    setTimeout(function () {
+      window.location.href = 'index.html';
+    }, 2800);
+  </script>
+</body>
+</html>

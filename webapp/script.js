@@ -48,7 +48,10 @@ var products = [
   { id: 19, name: '325 UC',           emoji: '🎮', category: 'pubg',     price: 59000 },
   { id: 20, name: '110 Diamonds',     emoji: '💎', category: 'freefire', price: 10400 },
   { id: 21, name: '572 Diamonds',     emoji: '💎', category: 'freefire', price: 52700 },
-  { id: 22, name: '2398 Diamonds',    emoji: '💎', category: 'freefire', price: 202000 }
+  { id: 22, name: '2398 Diamonds',    emoji: '💎', category: 'freefire', price: 202000 },
+  { id: 23, name: '341 Diamonds',     emoji: '💎', category: 'freefire', price: 32000 },
+  { id: 24, name: '1166 Diamonds',    emoji: '💎', category: 'freefire', price: 105500 },
+  { id: 25, name: '6160 Diamonds',    emoji: '💎', category: 'freefire', price: 511000 }
 ];
 
 // Category labels mapping
@@ -98,6 +101,116 @@ var selectedScreenshotFile = null;
 var topupAmount = 0;
 var topupMethod = null;
 var topupScreenshotFile = null;
+
+// Home page games (rasm joylari — images/games/ papkasiga qo'ying)
+var homeGamesList = [
+  { id: 'standoff2', name: 'STAND OFF 2', img: 'images/games/standoff2.png', needsId: true, badge: '', maintenance: true },
+  { id: 'freefire', name: 'FREE FIRE', img: 'images/games/freefire.png', needsId: true, badge: 'AVTO' },
+  { id: 'bloodstrike', name: 'Blood Strike', img: 'images/games/bloodstrike.svg', needsId: true, badge: 'Global' },
+  { id: 'bigo', name: 'Bigo Live', img: 'images/games/bigo.svg', needsId: false, href: 'products.html?category=gifts' },
+  { id: 'steam', name: 'STEAM', img: 'images/games/steam.png', needsId: false, href: 'products.html?category=all' },
+  { id: 'magicchess', name: 'MAGIC CHESS', img: 'images/games/magicchess.svg', needsId: true, badge: 'SNG' },
+  { id: 'deltaforce', name: 'DELTA FORCE', img: 'images/games/deltaforce.svg', needsId: true, badge: 'GIFTS' },
+  { id: 'shootloot', name: 'SHOOT AND LOOT', img: 'images/games/shootloot.svg', needsId: true },
+  { id: 'pubg', name: 'PUBG MOBILE', img: 'images/games/pubg.png', needsId: true, badge: 'AVTO' }
+];
+
+var homePromoList = [
+  { id: 'tgstars', name: 'TG STARS', img: 'images/games/tgstars.png', href: 'products.html?category=stars' },
+  { id: 'tgpremium', name: 'TG PREMIUM', img: 'images/games/tgpremium.png', href: 'products.html?category=premium' },
+  { id: 'tggifts', name: "Telegram Sovg'alar", img: 'images/games/tggifts.png', href: 'products.html?category=gifts' }
+];
+
+// ID kerak bo'lgan o'yinlar sahifasi
+var gameConfigs = {
+  freefire: {
+    title: 'FREE FIRE',
+    subtitle: '💎 Almazlar',
+    img: 'images/games/freefire.png',
+    storageKey: 'freefire',
+    tabs: [
+      { id: 'diamonds', label: 'Алмазы', icon: '💎' },
+      { id: 'passes', label: 'Пропуски', icon: '🎫' }
+    ],
+    tabProducts: {
+      diamonds: [
+        { productId: 20, label: '110', price: 10400 },
+        { productId: 23, label: '341', price: 32000 },
+        { productId: 21, label: '572', price: 52700 },
+        { productId: 24, label: '1166', price: 105500 },
+        { productId: 22, label: '2398', price: 202000 },
+        { productId: 25, label: '6160', price: 511000 }
+      ],
+      passes: []
+    }
+  },
+  pubg: {
+    title: 'PUBG MOBILE',
+    subtitle: '🎮 UC',
+    img: 'images/games/pubg.png',
+    storageKey: 'pubg',
+    tabs: [
+      { id: 'uc', label: 'UC', icon: '🎮' }
+    ],
+    tabProducts: {
+      uc: [
+        { productId: 16, label: '60 UC', price: 11600 },
+        { productId: 17, label: '120 UC', price: 23200 },
+        { productId: 18, label: '180 UC', price: 34800 },
+        { productId: 19, label: '325 UC', price: 59000 }
+      ]
+    }
+  },
+  standoff2: {
+    title: 'STAND OFF 2',
+    subtitle: 'Gold',
+    img: 'images/games/standoff2.png',
+    storageKey: 'standoff2',
+    maintenance: true,
+    tabs: [{ id: 'gold', label: 'Gold', icon: '🪙' }],
+    tabProducts: { gold: [] }
+  },
+  bloodstrike: {
+    title: 'Blood Strike',
+    subtitle: 'Global',
+    img: 'images/games/bloodstrike.png',
+    storageKey: 'bloodstrike',
+    tabs: [{ id: 'items', label: 'Mahsulotlar', icon: '🎯' }],
+    tabProducts: { items: [] }
+  },
+  magicchess: {
+    title: 'MAGIC CHESS',
+    subtitle: 'Diamonds',
+    img: 'images/games/magicchess.png',
+    storageKey: 'magicchess',
+    tabs: [{ id: 'diamonds', label: 'Diamonds', icon: '💎' }],
+    tabProducts: { diamonds: [] }
+  },
+  deltaforce: {
+    title: 'DELTA FORCE',
+    subtitle: 'GIFTS',
+    img: 'images/games/deltaforce.png',
+    storageKey: 'deltaforce',
+    tabs: [{ id: 'items', label: 'Mahsulotlar', icon: '🎁' }],
+    tabProducts: { items: [] }
+  },
+  shootloot: {
+    title: 'SHOOT AND LOOT',
+    subtitle: 'Top-up',
+    img: 'images/games/shootloot.png',
+    storageKey: 'shootloot',
+    tabs: [{ id: 'items', label: 'Mahsulotlar', icon: '🔫' }],
+    tabProducts: { items: [] }
+  }
+};
+
+var currentGameId = null;
+var currentGameTab = null;
+var selectedGameProductId = null;
+var verifiedPlayerId = null;
+var verifiedPlayerName = null;
+var isVerifyingPlayer = false;
+var currentHomeTab = 'games';
 
 /* ============================================
    Backend API
@@ -225,7 +338,11 @@ function loadBackendData() {
     .then(function () { return loadUserFromAPI(); })
     .then(function () { return loadHistoryFromAPI(); })
     .then(function () { return loadFinanceFromAPI(); })
-    .then(function () { renderProducts(); });
+    .then(function () {
+      renderProducts();
+      renderHomeGames();
+      initGamePage();
+    });
 }
 
 /* ============================================
@@ -352,6 +469,52 @@ function setActiveNav() {
 /**
  * Render products grid based on filters
  */
+function getProductImagePath(product) {
+  if (!product) return '';
+  var id = product.id;
+  var name = product.name || '';
+  if (product.category === 'gifts') {
+    return 'images/products/gifts/' + id + '.png';
+  }
+  if (product.category === 'pubg') {
+    return 'images/products/pubg/' + name.replace(/\s/g, '') + '.png';
+  }
+  if (product.category === 'freefire') {
+    var qty = name.split(' ')[0];
+    return 'images/products/freefire/' + qty + '.png';
+  }
+  if (product.category === 'stars') {
+    return 'images/products/stars/' + id + '.png';
+  }
+  if (product.category === 'premium') {
+    return 'images/products/premium/' + id + '.png';
+  }
+  return '';
+}
+
+function getProductImageFallback(product) {
+  var primary = getProductImagePath(product);
+  if (!primary) return '';
+  if (product.category === 'gifts') {
+    return primary.replace('.png', '.svg');
+  }
+  if (product.category === 'pubg') {
+    return primary.replace('.png', '.svg');
+  }
+  return primary.replace('.png', '.svg');
+}
+
+function productCardImageHtml(product) {
+  var src = getProductImagePath(product);
+  var fallback = getProductImageFallback(product);
+  if (!src) {
+    return '<div class="product-card__emoji">' + (product.emoji || '🛍️') + '</div>';
+  }
+  return '<div class="product-card__img">' +
+    '<img src="' + src + '" alt="' + product.name + '" onerror="this.onerror=null;this.src=\'' + fallback + '\';">' +
+    '</div>';
+}
+
 function renderProducts() {
   var grid = document.getElementById('productsGrid');
   var countEl = document.getElementById('productsCount');
@@ -374,7 +537,7 @@ function renderProducts() {
 
   grid.innerHTML = filtered.map(function (p) {
     return '<div class="product-card">' +
-      '<div class="product-card__emoji">' + p.emoji + '</div>' +
+      productCardImageHtml(p) +
       '<div class="product-card__name">' + p.name + '</div>' +
       '<div class="product-card__price">' + formatPrice(p.price) + ' so\'m</div>' +
       '<button class="product-card__buy" onclick="openPaymentModal(' + p.id + ')">Sotib olish</button>' +
@@ -431,15 +594,35 @@ function openPaymentModal(productId) {
   selectedProduct = products.find(function (p) { return p.id === productId; });
   if (!selectedProduct) return;
 
+  selectedProduct.img = getProductImagePath(selectedProduct) || selectedProduct.img;
+
   selectedPaymentMethod = null;
   resetPaymentModal();
 
   var modal = document.getElementById('paymentModal');
   if (!modal) return;
 
-  document.getElementById('modalProductEmoji').textContent = selectedProduct.emoji;
   document.getElementById('modalProductName').textContent = selectedProduct.name;
   document.getElementById('modalProductPrice').textContent = formatPrice(selectedProduct.price) + ' so\'m';
+
+  var modalImg = document.getElementById('modalProductImg');
+  var modalEmoji = document.getElementById('modalProductEmoji');
+  if (modalImg && modalEmoji) {
+    if (selectedProduct.img) {
+      modalImg.src = selectedProduct.img;
+      modalImg.classList.remove('hidden');
+      modalEmoji.classList.add('hidden');
+    } else {
+      modalImg.classList.add('hidden');
+      modalEmoji.classList.remove('hidden');
+      modalEmoji.textContent = selectedProduct.emoji || '🛍️';
+    }
+  } else if (modalEmoji) {
+    modalEmoji.textContent = selectedProduct.emoji || '🛍️';
+  } else if (modalImg && selectedProduct.img) {
+    modalImg.src = selectedProduct.img;
+    modalImg.classList.remove('hidden');
+  }
 
   var methods = document.querySelectorAll('#paymentStep1 .payment-method');
   methods.forEach(function (m) { m.classList.remove('selected'); });
@@ -481,12 +664,12 @@ function startProductPayment() {
 
   apiRequest('/api/payments', {
     method: 'POST',
-    body: {
+    body: Object.assign({
       amount: selectedProduct.price,
       payment_method: selectedPaymentMethod,
       purpose: 'product',
       product_id: selectedProduct.id
-    }
+    }, getPlayerOrderMeta())
   }).then(function (data) {
     currentPayment = data;
     showPaymentStep2(data, 'pay');
@@ -498,7 +681,7 @@ function startProductPayment() {
 function buyProductWithBalance() {
   apiRequest('/api/orders/balance', {
     method: 'POST',
-    body: { product_id: selectedProduct.id }
+    body: Object.assign({ product_id: selectedProduct.id }, getPlayerOrderMeta())
   }).then(function (data) {
     userData.balance = data.balance;
     updateUserUI();
@@ -967,18 +1150,320 @@ function closeProfile() {
    ============================================ */
 
 function switchHomeTab(tab) {
+  currentHomeTab = tab;
   var gamesEl = document.getElementById('homeGames');
-  var telegramEl = document.getElementById('homeTelegram');
+  var promoEl = document.getElementById('homePromo');
   var tabs = document.querySelectorAll('.cat-tab');
 
   tabs.forEach(function (btn) {
-    var isGames = btn.textContent.indexOf('O\'yinlar') !== -1;
-    btn.classList.toggle('active', (tab === 'games' && isGames) || (tab === 'telegram' && !isGames));
+    var isGames = btn.dataset.tab === 'games' || btn.textContent.indexOf('O\'yinlar') !== -1;
+    btn.classList.toggle('active', (tab === 'games' && isGames) || (tab === 'promo' && !isGames));
   });
 
   if (gamesEl) gamesEl.classList.toggle('hidden', tab !== 'games');
-  if (telegramEl) telegramEl.classList.toggle('hidden', tab !== 'telegram');
+  if (promoEl) promoEl.classList.toggle('hidden', tab !== 'promo');
   if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+}
+
+function imgPlaceholderHtml(src, alt) {
+  return '<div class="img-placeholder">' +
+    '<img src="' + src + '" alt="' + (alt || '') + '" onerror="this.style.display=\'none\';this.parentElement.classList.add(\'img-placeholder--empty\')">' +
+    '</div>';
+}
+
+function renderHomeGameTile(item) {
+  var href = item.needsId ? 'game.html?game=' + item.id : (item.href || 'products.html');
+  var badgeHtml = item.badge ? '<span class="game-tile__badge">' + item.badge + '</span>' : '';
+  var maintHtml = item.maintenance ? '<div class="game-tile__overlay">TEXNIK ISH</div>' : '';
+  return '<a class="game-tile' + (item.maintenance ? ' game-tile--disabled' : '') + '" href="' + (item.maintenance ? '#' : href) + '"' +
+    (item.maintenance ? ' onclick="showToast(\'Texnik ishlar davom etmoqda\',\'error\');return false;"' : '') + '>' +
+    badgeHtml +
+    '<div class="game-tile__img-wrap">' + imgPlaceholderHtml(item.img, item.name) + maintHtml + '</div>' +
+    '<div class="game-tile__name">' + item.name + '</div>' +
+    '</a>';
+}
+
+function renderHomeGames() {
+  var gamesGrid = document.getElementById('homeGames');
+  var promoGrid = document.getElementById('homePromo');
+  if (gamesGrid) {
+    gamesGrid.innerHTML = homeGamesList.map(renderHomeGameTile).join('');
+  }
+  if (promoGrid) {
+    promoGrid.innerHTML = homePromoList.map(renderHomeGameTile).join('');
+  }
+}
+
+function getPlayerOrderMeta() {
+  if (!verifiedPlayerId) return {};
+  return {
+    player_id: verifiedPlayerId,
+    player_name: verifiedPlayerName || verifiedPlayerId
+  };
+}
+
+function setGameProductsVisible(show) {
+  var section = document.getElementById('gameProductsSection');
+  if (section) section.classList.toggle('hidden', !show);
+  if (!show) {
+    selectedGameProductId = null;
+    updateGameBuyButton();
+  }
+}
+
+function showPlayerIdError(message) {
+  var errEl = document.getElementById('playerIdError');
+  if (errEl) {
+    errEl.textContent = message;
+    errEl.classList.remove('hidden');
+  }
+}
+
+function hidePlayerIdError() {
+  var errEl = document.getElementById('playerIdError');
+  if (errEl) errEl.classList.add('hidden');
+}
+
+function showVerifiedPlayerCard(nickname, playerId) {
+  var inputBlock = document.getElementById('playerIdInputBlock');
+  var verifiedEl = document.getElementById('playerIdVerified');
+  var nameEl = document.getElementById('verifiedPlayerName');
+  var idEl = document.getElementById('verifiedPlayerIdDisplay');
+
+  if (inputBlock) inputBlock.classList.add('hidden');
+  if (verifiedEl) verifiedEl.classList.remove('hidden');
+  if (nameEl) nameEl.textContent = nickname;
+  if (idEl) idEl.textContent = playerId;
+  hidePlayerIdError();
+  setGameProductsVisible(true);
+}
+
+function resetPlayerVerification() {
+  verifiedPlayerId = null;
+  verifiedPlayerName = null;
+  selectedGameProductId = null;
+
+  var inputBlock = document.getElementById('playerIdInputBlock');
+  var verifiedEl = document.getElementById('playerIdVerified');
+  var input = document.getElementById('playerIdInput');
+
+  if (inputBlock) inputBlock.classList.remove('hidden');
+  if (verifiedEl) verifiedEl.classList.add('hidden');
+  if (input) input.focus();
+  hidePlayerIdError();
+  setGameProductsVisible(false);
+  updateGameBuyButton();
+  document.querySelectorAll('.game-product-card').forEach(function (card) {
+    card.classList.remove('selected');
+  });
+}
+
+function getSavedPlayerIds(gameKey) {
+  try {
+    var raw = localStorage.getItem('savedIds_' + gameKey);
+    if (!raw) return [];
+    var parsed = JSON.parse(raw);
+    return parsed.map(function (item) {
+      if (typeof item === 'string') return { id: item, nickname: '' };
+      return { id: item.id, nickname: item.nickname || '' };
+    });
+  } catch (e) {
+    return [];
+  }
+}
+
+function savePlayerId(gameKey, id, nickname) {
+  var ids = getSavedPlayerIds(gameKey).filter(function (item) { return item.id !== id; });
+  ids.unshift({ id: id, nickname: nickname || '' });
+  if (ids.length > 5) ids = ids.slice(0, 5);
+  localStorage.setItem('savedIds_' + gameKey, JSON.stringify(ids));
+}
+
+function renderSavedIds(gameKey) {
+  var container = document.getElementById('savedIds');
+  if (!container) return;
+  var ids = getSavedPlayerIds(gameKey);
+  if (ids.length === 0) {
+    container.innerHTML = '<span class="saved-ids__empty">Saqlangan ID yo\'q</span>';
+    return;
+  }
+  container.innerHTML = ids.map(function (item) {
+    return '<button type="button" class="saved-id-chip" onclick="selectSavedId(\'' + item.id + '\')">' + item.id + '</button>';
+  }).join('');
+}
+
+function selectSavedId(id) {
+  var input = document.getElementById('playerIdInput');
+  if (input) input.value = id;
+  resetPlayerVerification();
+  verifyPlayerId();
+}
+
+function verifyPlayerId() {
+  var input = document.getElementById('playerIdInput');
+  var verifyBtn = document.getElementById('verifyBtn');
+  if (!input || !currentGameId || isVerifyingPlayer) return;
+
+  var id = input.value.trim().replace(/\s/g, '');
+  if (!/^\d{5,15}$/.test(id)) {
+    showPlayerIdError('To\'g\'ri o\'yinchi ID kiriting');
+    verifiedPlayerId = null;
+    verifiedPlayerName = null;
+    setGameProductsVisible(false);
+    updateGameBuyButton();
+    return;
+  }
+
+  isVerifyingPlayer = true;
+  if (verifyBtn) {
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = 'Tekshirilmoqda...';
+  }
+  hidePlayerIdError();
+
+  apiRequest('/api/games/verify-player', {
+    method: 'POST',
+    body: { game_id: currentGameId, player_id: id }
+  }).then(function (data) {
+    verifiedPlayerId = data.player_id;
+    verifiedPlayerName = data.nickname;
+    var config = gameConfigs[currentGameId];
+    savePlayerId(config.storageKey, data.player_id, data.nickname);
+    renderSavedIds(config.storageKey);
+    showVerifiedPlayerCard(data.nickname, data.player_id);
+    updateGameBuyButton();
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+  }).catch(function (err) {
+    verifiedPlayerId = null;
+    verifiedPlayerName = null;
+    setGameProductsVisible(false);
+    showPlayerIdError(err.message || 'O\'yinchi topilmadi');
+    if (tg && tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('error');
+  }).finally(function () {
+    isVerifyingPlayer = false;
+    if (verifyBtn) {
+      verifyBtn.disabled = false;
+      verifyBtn.textContent = 'Tekshirish';
+    }
+  });
+}
+
+function switchGameTab(tabId) {
+  currentGameTab = tabId;
+  var tabsEl = document.getElementById('gameProductTabs');
+  if (tabsEl) {
+    tabsEl.querySelectorAll('.game-tab').forEach(function (btn) {
+      btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
+  }
+  renderGameProducts();
+}
+
+function renderGameProducts() {
+  var grid = document.getElementById('gameProductsGrid');
+  if (!grid || !currentGameId || !currentGameTab) return;
+
+  var config = gameConfigs[currentGameId];
+  var items = (config.tabProducts && config.tabProducts[currentGameTab]) || [];
+
+  if (items.length === 0) {
+    grid.innerHTML = '<div class="no-products">Mahsulotlar tez orada qo\'shiladi</div>';
+    selectedGameProductId = null;
+    updateGameBuyButton();
+    return;
+  }
+
+  grid.innerHTML = items.map(function (item) {
+    var imgSrc = 'images/products/' + currentGameId + '/' + item.label.replace(/\s/g, '') + '.png';
+    var selected = selectedGameProductId === item.productId ? ' selected' : '';
+    return '<div class="game-product-card' + selected + '" data-id="' + item.productId + '" onclick="selectGameProduct(' + item.productId + ')">' +
+      '<div class="game-product-card__img">' + imgPlaceholderHtml(imgSrc, item.label) + '</div>' +
+      '<div class="game-product-card__body">' +
+        '<div class="game-product-card__qty">' + item.label + '</div>' +
+        '<div class="game-product-card__price">' + formatPrice(item.price) + ' so\'m</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function selectGameProduct(productId) {
+  if (!verifiedPlayerId) {
+    showToast('Avval o\'yinchi ID ni tekshiring', 'error');
+    return;
+  }
+  selectedGameProductId = productId;
+  document.querySelectorAll('.game-product-card').forEach(function (card) {
+    card.classList.toggle('selected', parseInt(card.dataset.id) === productId);
+  });
+  updateGameBuyButton();
+  if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
+}
+
+function updateGameBuyButton() {
+  var btn = document.getElementById('gameBuyBtn');
+  if (!btn) return;
+  btn.disabled = !(verifiedPlayerId && selectedGameProductId);
+}
+
+function buySelectedGameProduct() {
+  if (!verifiedPlayerId) {
+    showToast('Avval o\'yinchi ID ni tekshiring', 'error');
+    return;
+  }
+  if (!selectedGameProductId) {
+    showToast('Mahsulotni tanlang', 'error');
+    return;
+  }
+  openPaymentModal(selectedGameProductId);
+}
+
+function initGamePage() {
+  var params = new URLSearchParams(window.location.search);
+  var gameId = params.get('game');
+  if (!gameId || !gameConfigs[gameId]) return;
+
+  currentGameId = gameId;
+  var config = gameConfigs[gameId];
+
+  if (config.maintenance) {
+    showToast('Texnik ishlar davom etmoqda', 'error');
+    setTimeout(function () { window.location.href = 'index.html'; }, 1500);
+    return;
+  }
+
+  var titleEl = document.getElementById('gameTitle');
+  var subEl = document.getElementById('gameSubtitle');
+  var imgEl = document.getElementById('gameHeaderImg');
+  if (titleEl) titleEl.textContent = config.title;
+  if (subEl) subEl.textContent = config.subtitle;
+  if (imgEl) {
+    imgEl.src = config.img;
+    imgEl.alt = config.title;
+    imgEl.onerror = function () {
+      imgEl.style.display = 'none';
+      imgEl.parentElement.classList.add('img-placeholder--empty');
+    };
+  }
+
+  renderSavedIds(config.storageKey);
+  setGameProductsVisible(false);
+
+  var tabsEl = document.getElementById('gameProductTabs');
+  if (tabsEl && config.tabs.length) {
+    tabsEl.innerHTML = config.tabs.map(function (tab, i) {
+      return '<button type="button" class="game-tab' + (i === 0 ? ' active' : '') + '" data-tab="' + tab.id + '" onclick="switchGameTab(\'' + tab.id + '\')">' +
+        tab.icon + ' ' + tab.label + '</button>';
+    }).join('');
+    currentGameTab = config.tabs[0].id;
+    renderGameProducts();
+  }
+
+  var input = document.getElementById('playerIdInput');
+  if (input) {
+    input.addEventListener('input', function () {
+      if (verifiedPlayerId) resetPlayerVerification();
+    });
+  }
 }
 
 function openTopUp() {
@@ -1071,6 +1556,8 @@ document.addEventListener('DOMContentLoaded', function () {
   loadBackendData().then(function () {
     renderProducts();
     renderHistory();
+    renderHomeGames();
+    initGamePage();
     if (typeof initAdminPanel === 'function') initAdminPanel();
   });
 

@@ -3,97 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>VibeShop</title>
+  <title>GameVibeShop</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
-<body>
+<body class="page-home">
 
-  <div class="topbar">
-    <div class="topbar__user">
-      <img class="header__avatar topbar__avatar" src="" alt="">
-      <div>
-        <div class="header__name topbar__name">Yuklanmoqda...</div>
-        <div class="header__username topbar__username"></div>
-      </div>
-    </div>
-    <div class="topbar__coin">
-      <span class="topbar__coin-icon">🪙</span>
-      <span class="header__balance-value">0</span>
-    </div>
-  </div>
-
-  <main class="main">
-    <div class="balance-hero">
+  <main class="main main--home">
+    <div class="balance-hero balance-hero--compact">
       <div class="balance-hero__label">Balans</div>
-      <div class="balance-hero__amount"><span class="header__balance-value">0</span> so'm</div>
+      <div class="balance-hero__amount">
+        <span class="header__balance-value">0</span> so'm
+      </div>
       <div class="balance-hero__actions">
-        <div class="quick-action" onclick="window.location.href='topup.html'">
+        <a class="quick-action" href="topup.html">
           <span class="quick-action__icon">💳</span>
           <span class="quick-action__text">Hisobni to'ldirish</span>
-        </div>
-        <div class="quick-action" onclick="window.location.href='bonus.html'">
+        </a>
+        <a class="quick-action" href="bonus.html">
           <span class="quick-action__icon">🎟️</span>
           <span class="quick-action__text">Bonus kodlar</span>
-        </div>
-        <div class="quick-action" onclick="openSupport()">
+        </a>
+        <a class="quick-action" href="#" onclick="openSupport(); return false;">
           <span class="quick-action__icon">💬</span>
           <span class="quick-action__text">Qo'llab-quvvatlash</span>
-        </div>
+        </a>
       </div>
     </div>
 
     <div class="cat-tabs">
-      <button class="cat-tab active" onclick="switchHomeTab('games')">O'yinlar</button>
-      <button class="cat-tab" onclick="switchHomeTab('telegram')">Telegram</button>
+      <button class="cat-tab active" data-tab="games" onclick="switchHomeTab('games')">O'yinlar</button>
+      <button class="cat-tab" data-tab="promo" onclick="switchHomeTab('promo')">Promokodlar</button>
     </div>
 
-    <div id="homeGames" class="games-grid">
-      <a class="game-card" href="products.html?category=pubg">
-        <span class="game-card__badge game-card__badge--auto">AVTO</span>
-        <span class="game-card__emoji">🎮</span>
-        <span class="game-card__name">PUBG Mobile</span>
-      </a>
-      <a class="game-card" href="products.html?category=freefire">
-        <span class="game-card__badge game-card__badge--auto">AVTO</span>
-        <span class="game-card__emoji">💎</span>
-        <span class="game-card__name">Free Fire</span>
-      </a>
-      <a class="game-card" href="products.html?category=pubg">
-        <span class="game-card__emoji">🔫</span>
-        <span class="game-card__name">Standoff 2</span>
-      </a>
-      <a class="game-card" href="products.html?category=freefire">
-        <span class="game-card__emoji">⚔️</span>
-        <span class="game-card__name">Mobile Legends</span>
-      </a>
-      <a class="game-card" href="products.html?category=pubg">
-        <span class="game-card__emoji">🎯</span>
-        <span class="game-card__name">Call of Duty</span>
-      </a>
-      <a class="game-card" href="products.html">
-        <span class="game-card__badge game-card__badge--new">NEW</span>
-        <span class="game-card__emoji">🕹️</span>
-        <span class="game-card__name">Boshqa o'yinlar</span>
-      </a>
-    </div>
-
-    <div id="homeTelegram" class="games-grid hidden">
-      <a class="game-card" href="products.html?category=gifts">
-        <span class="game-card__badge game-card__badge--auto">AVTO</span>
-        <span class="game-card__emoji">🎁</span>
-        <span class="game-card__name">Sog'alar</span>
-      </a>
-      <a class="game-card" href="products.html?category=premium">
-        <span class="game-card__emoji">⭐</span>
-        <span class="game-card__name">Premium</span>
-      </a>
-      <a class="game-card" href="products.html?category=stars">
-        <span class="game-card__badge game-card__badge--auto">AVTO</span>
-        <span class="game-card__emoji">✨</span>
-        <span class="game-card__name">TG Stars</span>
-      </a>
-    </div>
+    <div id="homeGames" class="games-grid games-grid--home"></div>
+    <div id="homePromo" class="games-grid games-grid--home hidden"></div>
 
     <div class="app-footer">@VibeShop</div>
   </main>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#991b1b"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="#111622"/>
+  <circle cx="100" cy="88" r="58" fill="url(#g)" opacity="0.95"/>
+  <text x="100" y="105" text-anchor="middle" font-size="44">❤</text>
+  <text x="100" y="168" text-anchor="middle" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="14" font-weight="700">LOVE</text>
+</svg>

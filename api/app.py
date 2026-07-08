@@ -8,6 +8,7 @@ from pydantic import BaseModel, Field
 
 from api.auth import is_admin_user, require_telegram_user
 from api.admin_routes import router as admin_router
+from api.game_verify import verify_player
 from config import SERVE_WEBAPP, UPLOADS_DIR, WEBAPP_DIR
 from database.db import (
     confirm_card_to_card,
@@ -42,10 +43,19 @@ class PaymentCreate(BaseModel):
     payment_method: str = Field(..., pattern="^(bankomat|card_to_card)$")
     purpose: str = Field(default="topup", pattern="^(topup|product)$")
     product_id: int | None = None
+    player_id: str | None = None
+    player_name: str | None = None
 
 
 class ProductBuyBalance(BaseModel):
     product_id: int = Field(..., ge=1)
+    player_id: str | None = None
+    player_name: str | None = None
+
+
+class PlayerVerifyRequest(BaseModel):
+    game_id: str = Field(..., min_length=2, max_length=32)
+    player_id: str = Field(..., min_length=5, max_length=15, pattern=r"^\d+$")
 
 
 @app.get("/api/health")
@@ -101,6 +111,20 @@ async def get_finance(user: dict = Depends(require_telegram_user)):
     return {"finance": payments, "count": len(payments)}
 
 
+@app.post("/api/games/verify-player")
+async def verify_game_player(payload: PlayerVerifyRequest):
+    try:
+        result = await verify_player(payload.game_id, payload.player_id)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return {
+        "found": True,
+        "game_id": payload.game_id,
+        "player_id": result["player_id"],
+        "nickname": result["nickname"],
+    }
+
+
 @app.post("/api/payments")
 async def start_payment(
     payload: PaymentCreate,
@@ -124,6 +148,8 @@ async def start_payment(
             payment_method=payload.payment_method,
             purpose=payload.purpose,
             product_id=payload.product_id,
+            player_id=payload.player_id,
+            player_nickname=payload.player_name,
         )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
@@ -225,7 +251,12 @@ async def buy_with_balance(
     user: dict = Depends(require_telegram_user),
 ):
     try:
-        order = await create_order_from_balance(user["id"], payload.product_id)
+        order = await create_order_from_balance(
+            user["id"],
+            payload.product_id,
+            player_id=payload.player_id,
+            player_nickname=payload.player_name,
+        )
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

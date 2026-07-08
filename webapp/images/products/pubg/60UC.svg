@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <rect width="200" height="200" rx="16" fill="#111622"/>
+  <circle cx="100" cy="90" r="52" fill="#fbbf24" stroke="#f59e0b" stroke-width="4"/>
+  <text x="100" y="88" text-anchor="middle" fill="#78350f" font-family="Arial,sans-serif" font-size="28" font-weight="900">UC</text>
+  <text x="100" y="168" text-anchor="middle" fill="#7c6cf0" font-family="Arial,sans-serif" font-size="18" font-weight="800">60 UC</text>
+</svg>

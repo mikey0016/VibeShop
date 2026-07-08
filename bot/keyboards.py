@@ -9,7 +9,7 @@ def main_menu_keyboard() -> InlineKeyboardMarkup:
             [
                 InlineKeyboardButton(
                     text="🛍️ Открыть магазин",
-                    web_app=WebAppInfo(url=WEBAPP_URL),
+                    web_app=WebAppInfo(url=f"{WEBAPP_URL.rstrip('/')}/splash.html"),
                 )
             ],
             [

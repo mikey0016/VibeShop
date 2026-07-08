@@ -74,6 +74,10 @@ async def init_db() -> None:
         columns = {row[1] for row in await cursor.fetchall()}
         if "payment_id" not in columns:
             await db.execute("ALTER TABLE orders ADD COLUMN payment_id INTEGER")
+        if "player_id" not in columns:
+            await db.execute("ALTER TABLE orders ADD COLUMN player_id TEXT")
+        if "player_nickname" not in columns:
+            await db.execute("ALTER TABLE orders ADD COLUMN player_nickname TEXT")
 
         await db.execute(
             """
@@ -91,15 +95,19 @@ async def init_db() -> None:
 
 async def seed_products() -> None:
     async with aiosqlite.connect(DATABASE_PATH) as db:
-        cursor = await db.execute("SELECT COUNT(*) FROM products")
-        count = (await cursor.fetchone())[0]
-        if count > 0:
-            return
-
-        await db.executemany(
-            "INSERT INTO products (id, name, emoji, category, price) VALUES (?, ?, ?, ?, ?)",
-            [(p["id"], p["name"], p["emoji"], p["category"], p["price"]) for p in PRODUCTS],
-        )
+        for p in PRODUCTS:
+            await db.execute(
+                """
+                INSERT INTO products (id, name, emoji, category, price)
+                VALUES (?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    name = excluded.name,
+                    emoji = excluded.emoji,
+                    category = excluded.category,
+                    price = excluded.price
+                """,
+                (p["id"], p["name"], p["emoji"], p["category"], p["price"]),
+            )
         await db.commit()
 
 
@@ -212,6 +220,8 @@ async def create_payment(
     payment_method: str,
     purpose: str = "topup",
     product_id: int | None = None,
+    player_id: str | None = None,
+    player_nickname: str | None = None,
 ) -> dict:
     settings = await get_payment_settings()
     if not settings.get("card_number") or not settings.get("card_holder"):
@@ -245,10 +255,10 @@ async def create_payment(
 
             order_cursor = await db.execute(
                 """
-                INSERT INTO orders (user_id, product_id, product_name, amount, payment_method, status, payment_id)
-                VALUES (?, ?, ?, ?, ?, 'pending', ?)
+                INSERT INTO orders (user_id, product_id, product_name, amount, payment_method, status, payment_id, player_id, player_nickname)
+                VALUES (?, ?, ?, ?, ?, 'pending', ?, ?, ?)
                 """,
-                (user["id"], product["id"], product["name"], product["price"], payment_method, payment_id),
+                (user["id"], product["id"], product["name"], product["price"], payment_method, payment_id, player_id, player_nickname),
             )
             order_id = order_cursor.lastrowid
             await db.execute(
@@ -445,7 +455,12 @@ async def add_user_balance(telegram_id: int, amount: int) -> int:
         return row[0] if row else 0
 
 
-async def create_order_from_balance(telegram_id: int, product_id: int) -> dict:
+async def create_order_from_balance(
+    telegram_id: int,
+    product_id: int,
+    player_id: str | None = None,
+    player_nickname: str | None = None,
+) -> dict:
     user = await get_or_create_user(telegram_id)
     product = await get_product(product_id)
     if not product:
@@ -462,10 +477,10 @@ async def create_order_from_balance(telegram_id: int, product_id: int) -> dict:
         )
         cursor = await db.execute(
             """
-            INSERT INTO orders (user_id, product_id, product_name, amount, payment_method, status)
-            VALUES (?, ?, ?, ?, 'balance', 'success')
+            INSERT INTO orders (user_id, product_id, product_name, amount, payment_method, status, player_id, player_nickname)
+            VALUES (?, ?, ?, ?, 'balance', 'success', ?, ?)
             """,
-            (user["id"], product["id"], product["name"], product["price"]),
+            (user["id"], product["id"], product["name"], product["price"], player_id, player_nickname),
         )
         await db.commit()
         order_id = cursor.lastrowid
