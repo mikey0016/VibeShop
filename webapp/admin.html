@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VibeShop — Admin</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+  <div id="accessDenied" class="access-denied hidden">
+    <div class="access-denied__icon">⛔</div>
+    <h2>Kirish taqiqlangan</h2>
+    <p>Bu sahifa faqat adminlar uchun.</p>
+    <a href="index.html" class="btn-primary" style="display:inline-block;text-align:center;margin-top:16px;padding:14px 24px;">Bosh sahifa</a>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <div class="topbar">
+      <div class="topbar__user">
+        <img class="header__avatar topbar__avatar" src="" alt="">
+        <div>
+          <div class="header__name topbar__name">Admin</div>
+          <div class="header__username topbar__username">Boshqaruv paneli</div>
+        </div>
+      </div>
+      <div class="admin-badge">👑 Admin</div>
+    </div>
+
+    <main class="main">
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="stats" onclick="switchAdminTab('stats')">📊</button>
+        <button class="admin-tab" data-tab="payments" onclick="switchAdminTab('payments')">💳</button>
+        <button class="admin-tab" data-tab="orders" onclick="switchAdminTab('orders')">📦</button>
+        <button class="admin-tab" data-tab="users" onclick="switchAdminTab('users')">👥</button>
+        <button class="admin-tab" data-tab="settings" onclick="switchAdminTab('settings')">⚙️</button>
+      </div>
+
+      <div id="tabStats" class="admin-tab-content">
+        <h1 class="page-title">Statistika</h1>
+        <div class="admin-stats">
+          <div class="stat-box">
+            <div class="stat-box__label">Foydalanuvchilar</div>
+            <div id="statUsers" class="stat-box__value">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__label">Buyurtmalar</div>
+            <div id="statOrders" class="stat-box__value">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__label">Kutilmoqda</div>
+            <div id="statPending" class="stat-box__value stat-box__value--gold">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box__label">Muvaffaqiyatli</div>
+            <div id="statSuccess" class="stat-box__value">0</div>
+          </div>
+          <div class="stat-box stat-box--wide">
+            <div class="stat-box__label">Daromad</div>
+            <div id="statRevenue" class="stat-box__value">0 so'm</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tabPayments" class="admin-tab-content hidden">
+        <h1 class="page-title">To'lovlar</h1>
+        <div class="admin-filters">
+          <button class="filter-btn active" onclick="filterAdminPayments(null)">Barchasi</button>
+          <button class="filter-btn" onclick="filterAdminPayments('awaiting_admin')">Tekshiruvda</button>
+          <button class="filter-btn" onclick="filterAdminPayments('pending')">Kutilmoqda</button>
+          <button class="filter-btn" onclick="filterAdminPayments('success')">Bajarildi</button>
+        </div>
+        <div id="adminPaymentsList" class="admin-list"></div>
+      </div>
+
+      <div id="tabOrders" class="admin-tab-content hidden">
+        <h1 class="page-title">Buyurtmalar</h1>
+        <div id="adminOrdersList" class="admin-list"></div>
+      </div>
+
+      <div id="tabUsers" class="admin-tab-content hidden">
+        <h1 class="page-title">Foydalanuvchilar</h1>
+        <div id="adminUsersList" class="admin-list"></div>
+      </div>
+
+      <div id="tabSettings" class="admin-tab-content hidden">
+        <h1 class="page-title">To'lov kartasi</h1>
+        <div class="input-group">
+          <label class="input-group__label">Karta raqami</label>
+          <input type="text" id="adminCardNumber" class="search-box__input" placeholder="9860 1234 5678 9012">
+        </div>
+        <div class="input-group">
+          <label class="input-group__label">Karta egasi</label>
+          <input type="text" id="adminCardHolder" class="search-box__input" placeholder="Alisher Karimov">
+        </div>
+        <div class="input-group">
+          <label class="input-group__label">Bank (ixtiyoriy)</label>
+          <input type="text" id="adminBankName" class="search-box__input" placeholder="UzCard / HUMO">
+        </div>
+        <button class="btn-primary" onclick="saveAdminCardSettings()">💾 Saqlash</button>
+      </div>
+    </main>
+
+    <nav class="bottom-nav">
+      <a class="nav-item" href="index.html">
+        <span class="nav-item__icon">🏠</span>
+        <span class="nav-item__label">Bosh sahifa</span>
+      </a>
+      <a class="nav-item" href="history.html">
+        <span class="nav-item__icon">🕐</span>
+        <span class="nav-item__label">Tarix</span>
+      </a>
+      <a class="nav-item" href="settings.html">
+        <span class="nav-item__icon">👤</span>
+        <span class="nav-item__label">Sozlamalar</span>
+      </a>
+      <a class="nav-item active" href="admin.html">
+        <span class="nav-item__icon">👑</span>
+        <span class="nav-item__label">Admin</span>
+      </a>
+    </nav>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

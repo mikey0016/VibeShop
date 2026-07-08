@@ -1,0 +1,18 @@
+# VibeShop — Frontend (Telegram Mini App UI)
+# Backend API alohida Render/Railway da ishlaydi, /api proxy orqali ulanadi.
+
+[build]
+  publish = "webapp"
+
+# SPA — barcha sahifalar index emas, lekin .html fayllar to'g'ridan-to'g'ri ishlaydi
+[[redirects]]
+  from = "/api/*"
+  to = "https://PLACEHOLDER-BACKEND.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "ALLOWALL"
+    Access-Control-Allow-Origin = "*"

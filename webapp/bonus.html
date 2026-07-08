@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VibeShop — Bonus kod</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar__user">
+      <img class="header__avatar topbar__avatar" src="" alt="">
+      <div>
+        <div class="header__name topbar__name">Yuklanmoqda...</div>
+        <div class="header__username topbar__username"></div>
+      </div>
+    </div>
+    <div class="topbar__coin">
+      <span class="topbar__coin-icon">🪙</span>
+      <span class="header__balance-value">0</span>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="section-label">Bonus kodi</div>
+    <div class="bonus-card">
+      <div class="bonus-card__icon">🎟️</div>
+      <input type="text" class="bonus-card__input" placeholder="Kodni kiriting" id="bonusCodeInput">
+      <button class="btn-primary" onclick="openBonusCodes()">Faollashtirish</button>
+    </div>
+    <div class="app-footer">@VibeShop</div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="index.html">
+      <span class="nav-item__icon">🏠</span>
+      <span class="nav-item__label">Bosh sahifa</span>
+    </a>
+    <a class="nav-item" href="history.html">
+      <span class="nav-item__icon">🕐</span>
+      <span class="nav-item__label">Tarix</span>
+    </a>
+    <a class="nav-item" href="settings.html">
+      <span class="nav-item__icon">👤</span>
+      <span class="nav-item__label">Sozlamalar</span>
+    </a>
+    <a class="nav-item" href="products.html">
+      <span class="nav-item__icon">🛍️</span>
+      <span class="nav-item__label">Mahsulotlar</span>
+    </a>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

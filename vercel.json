@@ -1,0 +1,17 @@
+{
+  "outputDirectory": "webapp",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://PLACEHOLDER-BACKEND.onrender.com/api/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "ALLOWALL" }
+      ]
+    }
+  ]
+}

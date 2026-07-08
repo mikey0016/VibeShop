@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>VibeShop — Sozlamalar</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar__user">
+      <img class="header__avatar topbar__avatar" src="" alt="">
+      <div>
+        <div class="header__name topbar__name">Yuklanmoqda...</div>
+        <div class="header__username topbar__username"></div>
+      </div>
+    </div>
+    <div class="topbar__coin">
+      <span class="topbar__coin-icon">🪙</span>
+      <span class="header__balance-value">0</span>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="profile-card">
+      <div class="profile-card__top">
+        <img class="profile-card__avatar" src="" alt="">
+        <div>
+          <div class="profile-card__name">Foydalanuvchi</div>
+          <div class="profile-card__username">@username</div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-box">
+          <div class="stat-box__label">Balans</div>
+          <div class="profile-card__balance stat-box__value">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box__label">Keshbek</div>
+          <div class="stat-box__value stat-box__value--gold">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Til</div>
+    <div class="service-list" style="margin-bottom:16px;padding:12px;">
+      <div class="lang-switch">
+        <button class="lang-switch__btn active">O'zbekcha</button>
+        <button class="lang-switch__btn">Русский</button>
+      </div>
+    </div>
+
+    <div class="section-label">Xizmatlar</div>
+    <div class="service-list">
+      <div class="service-item" onclick="window.location.href='topup.html'">
+        <div class="service-item__icon">💳</div>
+        <div class="service-item__body">
+          <div class="service-item__title">Hisobni to'ldirish</div>
+          <div class="service-item__desc">Balansni tez va xavfsiz to'ldiring</div>
+        </div>
+        <span class="service-item__arrow">›</span>
+      </div>
+      <div class="service-item" onclick="window.location.href='bonus.html'">
+        <div class="service-item__icon">🎟️</div>
+        <div class="service-item__body">
+          <div class="service-item__title">Bonus kodlar</div>
+          <div class="service-item__desc">Keshbekdan chegirma kodlari yarating</div>
+        </div>
+        <span class="service-item__arrow">›</span>
+      </div>
+      <div class="service-item" onclick="openSupport()">
+        <div class="service-item__icon">💬</div>
+        <div class="service-item__body">
+          <div class="service-item__title">Qo'llab-quvvatlash</div>
+          <div class="service-item__desc">24/7 yordam chat</div>
+        </div>
+        <span class="service-item__arrow">›</span>
+      </div>
+      <div class="setting-item" style="border:none;margin:0;border-radius:0;border-bottom:1px solid var(--color-border);">
+        <div class="setting-item__left">
+          <span class="setting-item__icon">🌙</span>
+          <span class="setting-item__text">Tungi tema</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="darkThemeToggle" class="toggle__input" checked onchange="toggleTheme(this.checked)">
+          <span class="toggle__slider"></span>
+        </label>
+      </div>
+      <div class="setting-item" style="border:none;margin:0;border-radius:0;">
+        <div class="setting-item__left">
+          <span class="setting-item__icon">🔔</span>
+          <span class="setting-item__text">Bildirishnomalar</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="notificationsToggle" class="toggle__input" checked onchange="toggleNotifications(this.checked)">
+          <span class="toggle__slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div id="adminPanelLink" class="service-list hidden" style="margin-top:12px;">
+      <div class="service-item" onclick="window.location.href='admin.html'">
+        <div class="service-item__icon">👑</div>
+        <div class="service-item__body">
+          <div class="service-item__title">Admin panel</div>
+          <div class="service-item__desc">To'lovlar va sozlamalar</div>
+        </div>
+        <span class="service-item__arrow">›</span>
+      </div>
+    </div>
+
+    <button class="btn-danger" onclick="closeApp()">Ilovani yopish</button>
+    <div class="app-footer">VibeShop v1.2 · @VibeShop</div>
+  </main>
+
+  <nav class="bottom-nav">
+    <a class="nav-item" href="index.html">
+      <span class="nav-item__icon">🏠</span>
+      <span class="nav-item__label">Bosh sahifa</span>
+    </a>
+    <a class="nav-item" href="history.html">
+      <span class="nav-item__icon">🕐</span>
+      <span class="nav-item__label">Tarix</span>
+    </a>
+    <a class="nav-item active" href="settings.html">
+      <span class="nav-item__icon">👤</span>
+      <span class="nav-item__label">Sozlamalar</span>
+    </a>
+    <a class="nav-item" href="products.html">
+      <span class="nav-item__icon">🛍️</span>
+      <span class="nav-item__label">Mahsulotlar</span>
+    </a>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

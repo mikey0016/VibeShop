@@ -1,0 +1,28 @@
+# Render.com — to'liq backend (FastAPI + Telegram bot + SQLite)
+# https://render.com da "New > Blueprint" orqali deploy qiling
+
+services:
+  - type: web
+    name: vibeshop-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: API_HOST
+        value: "0.0.0.0"
+      - key: API_PORT
+        value: "10000"
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBAPP_URL
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: SUPPORT_USERNAME
+        value: "VibeShop_support"
+      - key: PAYMENT_TIMEOUT_MINUTES
+        value: "5"
